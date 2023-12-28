@@ -2,17 +2,17 @@ import sys
 import firebase_admin
 from firebase_admin import credentials, initialize_app, firestore
 
-dev_cred = credentials.Certificate("service_accounts/from.json")
-prod_cred = credentials.Certificate("service_accounts/to.json")
+from_cred = credentials.Certificate("service_accounts/from.json")
+to_cred = credentials.Certificate("service_accounts/to.json")
 
-default_app = initialize_app(dev_cred, name="from-app")
-other_app = initialize_app(prod_cred, name="to-app")
+default_app = initialize_app(from_cred, name="from-app")
+other_app = initialize_app(to_cret, name="to-app")
 
-dev_db = firestore.client(default_app)
-prod_db = firestore.client(other_app)
+from_db = firestore.client(default_app)
+to_db = firestore.client(other_app)
 
-collection_ref = dev_db.collection(sys.argv[0])
-destination_collection_ref = prod_db.collection(sys.argv[0])
+collection_ref = from_db.collection(sys.argv[0])
+destination_collection_ref = to_db.collection(sys.argv[0])
 
 # transfer documents
 for doc in collection_ref.stream():
